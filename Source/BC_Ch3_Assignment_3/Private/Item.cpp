@@ -5,15 +5,13 @@
 
 #include "Components/AudioComponent.h"
 
+DEFINE_LOG_CATEGORY(LogItem)
+
 // Sets default values
 AItem::AItem()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
-
-	
-	
 	
 	//
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
@@ -64,7 +62,23 @@ AItem::AItem()
 void AItem::BeginPlay()
 {
 	Super::BeginPlay();
+	UE_LOG(LogTemp, Warning, TEXT("Item BeginPlay") , *GetName());
 	
+}
+
+void AItem::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+}
+
+void AItem::Destroyed()
+{
+	Super::Destroyed();
+}
+
+void AItem::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
 }
 
 // Called every frame

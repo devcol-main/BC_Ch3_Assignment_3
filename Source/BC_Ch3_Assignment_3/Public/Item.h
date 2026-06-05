@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "Item.generated.h"
 
+
+
+DECLARE_LOG_CATEGORY_EXTERN(LogItem, Log, All);
 // 이 클래스를 리플렉션 시스템에 등록하는 매크로입니다.
 // 언리얼 에디터에서 이 클래스를 블루프린트로 확장할 수 있게 하고, 에디터의 여러 기능과 연동하도록 합니다.
 UCLASS()
@@ -30,6 +33,11 @@ protected:
 	
 	//
 	UAudioComponent* AudioComp;
+	
+	//
+	virtual void PostInitializeComponents() override;
+	virtual void Destroyed() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:	
 	// Called every frame
