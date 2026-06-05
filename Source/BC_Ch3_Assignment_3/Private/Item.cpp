@@ -19,42 +19,12 @@ AItem::AItem()
 	
 	
 	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	StaticMeshComp->SetupAttachment(SceneRoot);
+	StaticMeshComp->SetupAttachment(SceneRoot);	
 	
-	// 1-4 hw
 	AudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComp"));
-	AudioComp->SetupAttachment(StaticMeshComp);
-	
-	// Static Mesh를 코드에서 설정
-	// ConstructorHelpers::FObjectFinder<T> 
-		// Unreal Engine에서 특정 리소스를 경로 기반으로 로드하는 클래스입니다.
-		// TEXT("/Game/Resources/Props/SM_Chair.SM_Chair"):리소스의 경로를 나타냅니다. 리소스의 경로를 해당하는 에셋을 우클릭하고 Copy Reference를 해서 붙여넣기를 합니다.
-		// Game은 Unreal Engine에서 프로젝트의 Content 폴더를 나타냅니다.
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshAsset(TEXT("/Game/Resources/Props/SM_Chair.SM_Chair"));
-	
-	//.Succeeded()
-		//지정된 경로에서 리소스를 성공적으로 찾았는지 확인합니다.
-		//경로가 잘못되었거나 리소스 파일이 누락된 경우 실패하며, 이후 설정 함수가 호출되지 않습니다.
-	if (MeshAsset.Succeeded())
-	{
-		StaticMeshComp->SetStaticMesh(MeshAsset.Object);
-	}
-	
-	// SetStaticMesh(), SetMaterial()
-		// 성공적으로 로드된 Static Mesh를 StaticMeshComp에 설정합니다.
-		//로드된 Material을 StaticMeshComp의 특정 머티리얼 슬롯에 적용합니다. 여기서는 첫 번째 머티리얼 슬롯 (Index 0)에 Material이 설정됩니다. 
-	
+	AudioComp->SetupAttachment(SceneRoot);
 
-	// Material을 코드에서 설정
-	static ConstructorHelpers::FObjectFinder<UMaterial> MaterialAsset(TEXT("/Game/Resources/Materials/M_Metal_Gold.M_Metal_Gold"));
-	if (MaterialAsset.Succeeded())
-	{
-		StaticMeshComp->SetMaterial(0, MaterialAsset.Object);
-	}
 	
-	//
-	
-	static ConstructorHelpers::FObjectFinder<UAudioComponent> AudioAsset(TEXT("/Game/Resources/Audio/Crate_Break_Cue.Crate_Break_Cue"));
 	
 }
 
@@ -62,9 +32,54 @@ AItem::AItem()
 void AItem::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("Item BeginPlay") , *GetName());
+	//UE_LOG(LogTemp, Warning, TEXT("Item BeginPlay") , *GetName());
+	// SetActorLocation(FVector NewLocation): 액터 위치 이동
+	// SetActorRotation(FRotator NewRotation): 액터 회전
+	// SetActorScale3D(FVector NewScale): 액터 스케일 변경
+	
+	// GetActorLocation(), GetActorRotation(), GetActorScale3D(): 현재 Transform 정보 가져오기
+	
+	
+	// SetActorTransform(FTransform NewTransform): 위치·회전·스케일을 한 번에 설정
+	/*
+	FVector NewLocation = FVector(300, 0.0f, 0.0f);
+	FRotator NewRotation = FRotator(0.0f, 90.0f, 0.0f);
+	FVector NewScale = FVector(2.0f);
+	
+	SetActorTransform(FTransform(NewRotation, NewLocation, NewScale));
+	
+	SetActorLocation(NewLocation);
+	*/
+	
+	// 블루프린트에서 구현한 함수를 C++에서 호출함
+	OnItemPickedUp();
+}
+
+// Called every frame
+void AItem::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+	
+	
+	
+	/*
+	if (!FMath::IsNearlyZero(UpDownSpeed))
+	{		
+		AddActorLocalOffset(FVector(0.0f, 0.0f, UpDownSpeed * DeltaTime));
+	}
+	
+	//AddActorLocalRotation();	
+	if (!FMath::IsNearlyZero(RotationSpeed))
+	{
+		AddActorLocalRotation(FRotator(0.0f, RotationSpeed * DeltaTime, 0.0f));
+	}
+	*/
+	
 	
 }
+
+/*
 
 void AItem::PostInitializeComponents()
 {
@@ -81,10 +96,18 @@ void AItem::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 }
 
-// Called every frame
-void AItem::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+*/
 
+
+// BlueprintCallable 함수 구현
+void AItem::ResetActorPosition()
+{
+	// (0, 0, 0) 위치로 되돌립니다.
+	SetActorLocation(FVector::ZeroVector); // == FVector(0.0f, 0.0f, 0.0f);
+}
+
+float AItem::GetRotationSpeed() const
+{
+	return RotationSpeed;
 }
 

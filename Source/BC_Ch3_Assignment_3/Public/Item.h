@@ -21,26 +21,57 @@ class BC_CH3_ASSIGNMENT_3_API AItem : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AItem();
+	
+	
+protected:	
+	// 회전 속도, 클래스 기본값만 수정 가능
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Item|Properties")
+	float RotationSpeed = 90.0f;
+
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 	
+	// Root Scene Component, 에디터에서 볼 수만 있고 수정 불가
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Item|Components")
 	// 루트 컴포넌트를 나타내는 Scene Component 포인터
 	USceneComponent* SceneRoot;
+	
+	
+	// Static Mesh, 에디터와 Blueprint에서 수정 가능
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item|Components")
 	// Static Mesh Component 포인터
 	UStaticMeshComponent* StaticMeshComp;
 	
 	//
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item|Components")
 	UAudioComponent* AudioComp;
+
+	// ===
 	
+	// 함수를 블루프린트에서 호출 가능하도록 설정
+	UFUNCTION(BlueprintCallable, Category="Item|Actions")
+	void ResetActorPosition();
+		
+	// 블루프린트에서 값만 반환하도록 설정
+	UFUNCTION(BlueprintPure, Category = "Item|Properties")
+	float GetRotationSpeed() const;
+
+	// C++에서 호출되지만 구현은 블루프린트에서 수행
+	UFUNCTION(BlueprintImplementableEvent, Category = "Item|Event")
+	void OnItemPickedUp();
 	//
+	/*
 	virtual void PostInitializeComponents() override;
 	virtual void Destroyed() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	*/
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
+
+	
 };
