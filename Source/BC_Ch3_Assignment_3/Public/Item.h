@@ -27,6 +27,9 @@ protected:
 	USceneComponent* SceneRoot;
 	// Static Mesh Component 포인터
 	UStaticMeshComponent* StaticMeshComp;
+	
+	//
+	UAudioComponent* AudioComp;
 
 public:	
 	// Called every frame

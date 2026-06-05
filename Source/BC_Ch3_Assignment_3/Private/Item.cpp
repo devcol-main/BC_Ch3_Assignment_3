@@ -3,18 +3,29 @@
 
 #include "Item.h"
 
+#include "Components/AudioComponent.h"
+
 // Sets default values
 AItem::AItem()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
+
+	
+	
+	
 	//
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
 	SetRootComponent(SceneRoot);
 	
+	
 	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMeshComp->SetupAttachment(SceneRoot);
+	
+	// 1-4 hw
+	AudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComp"));
+	AudioComp->SetupAttachment(StaticMeshComp);
 	
 	// Static Mesh를 코드에서 설정
 	// ConstructorHelpers::FObjectFinder<T> 
@@ -44,6 +55,9 @@ AItem::AItem()
 	}
 	
 	//
+	
+	static ConstructorHelpers::FObjectFinder<UAudioComponent> AudioAsset(TEXT("/Game/Resources/Audio/Crate_Break_Cue.Crate_Break_Cue"));
+	
 }
 
 // Called when the game starts or when spawned
