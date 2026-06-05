@@ -7,7 +7,10 @@
 		{
 			"Name": "BC_Ch3_Assignment_3",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	],
 	"Plugins": [
