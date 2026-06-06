@@ -28,7 +28,7 @@ protected:
 	TSubclassOf<AActor> RotatingPlatformActor;	
 	
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="RandomActor|Properties")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="RandomActor|Properties",meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> ActorToSpawn;
 	
 	//
