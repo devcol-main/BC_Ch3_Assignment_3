@@ -8,6 +8,15 @@ ARotatingActor::ARotatingActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
+	SetRootComponent(SceneRoot);
+	
+	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	StaticMeshComp->SetupAttachment(SceneRoot);
+	
+	//StaticMeshComp->SetRelativeLocation(StartLocation);
+	SetActorLocation(StartLocation);
 
 }
 
@@ -23,7 +32,22 @@ void ARotatingActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	//AddActorLocalRotation(FRotator(0.0f, 10.0f * DeltaTime, 0.0f));
+	if (bRotateOnPitch)
+	{
+		AddActorLocalRotation(FRotator(RotationSpeed * DeltaTime, 0.0f, 0.0f));	
+	}
+	
+	if (bRotateOnYaw)
+	{
+		AddActorLocalRotation(FRotator(0.0f, RotationSpeed * DeltaTime, 0.0f));	
+	}
+	
+	if (bRotateOnRoll)
+	{
+		AddActorLocalRotation(FRotator(0.0f, 0.0f, RotationSpeed * DeltaTime));	
+	}
+	
+	
 
 }
 

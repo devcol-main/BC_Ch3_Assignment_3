@@ -18,6 +18,9 @@ AMovingPlatformActor::AMovingPlatformActor()
 	
 	//StaticMeshComp->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 	SetActorLocation(StartLocation);
+	
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -27,39 +30,63 @@ void AMovingPlatformActor::BeginPlay()
 	
 	UE_LOG(LogTemp, Warning, TEXT("AMovingPlatformActor BeginPlay") , *GetName());
 	
+	
+	SetActorLocation(StartLocation);
+	
 }
 
 // Called every frame
 void AMovingPlatformActor::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(DeltaTime);	
+
+	// forward & backward
 	
 	if (!FMath::IsNearlyZero(MoveSpeed))
-	{	
-		if (GetActorLocation().X < MaxRange)
+	{						
+		//UE_LOG(LogTemp, Warning, TEXT("MaxRange: %f") , MaxRange);
+		if (bToggleForward == true)
 		{
 			AddActorLocalOffset(FVector(MoveSpeed * DeltaTime, 0.0f, 0.0f));	
+			// AddActorWorldOffset(FVector(MoveSpeed * DeltaTime, 0.0f, 0.0f));
+			
+			if (GetActorLocation().X > (MaxRange + StartLocation.X))
+			{				
+				bToggleForward = false;
+			}			
+				
 		}
 		else
 		{
 			AddActorLocalOffset(FVector(-MoveSpeed * DeltaTime, 0.0f, 0.0f));
-		}	
+			
+			if (GetActorLocation().X < (StartLocation.X - MaxRange))
+				bToggleForward = true;
+			
+		}		
 		
 	}	
 	
+	// up down
 	if (!FMath::IsNearlyZero(UpDownSpeed))
 	{
-		if (GetActorLocation().Z < MaxRange)
+		if (bToggleUp == true)
 		{
-			AddActorLocalOffset(FVector(0.0f, 0.0f, UpDownSpeed * DeltaTime));
+			AddActorLocalOffset(FVector(0.0f,0.0f, UpDownSpeed * DeltaTime));
 			
+			if (GetActorLocation().Z > (MaxRange + StartLocation.Z))
+				bToggleUp = false;
 		}
 		else
 		{
-			AddActorLocalOffset(FVector(0.0f, 0.0f, -UpDownSpeed * DeltaTime)); 
+			AddActorLocalOffset(FVector(0.0f,0.0f, -UpDownSpeed * DeltaTime));
+			
+			if (GetActorLocation().Z < (StartLocation.Z - MaxRange))
+				bToggleUp = true;
 		}
 		
-	}
+		
+	}	
 	
 
 }
@@ -91,3 +118,4 @@ void AMovingPlatformActor::UpDownPlatformActor()
 	
 
 }
+

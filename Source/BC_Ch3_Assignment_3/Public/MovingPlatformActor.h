@@ -19,8 +19,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MovingPlatformActor|Components")
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="MovingPlatformActor|Components")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MovingPlatformActor|Components")
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="MovingPlatformActor|Components")
 	USceneComponent* SceneRoot;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MovingPlatformActor|Components")
@@ -47,6 +47,12 @@ protected:
 	bool bIsMoving = true;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MovingPlatformActor|Properties")
+	bool bToggleForward = true;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MovingPlatformActor|Properties")
+	bool bToggleUp = true;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MovingPlatformActor|Properties")
 	FVector StartLocation = FVector(0.0f, 0.0f, 0.0f);
 		
 	// Foward & Backward
@@ -57,8 +63,12 @@ protected:
 	float MaxRange = 100.0f;
 	
 	
+	
+	
 	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="MovingPlatformActor|Properties")
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MovingPlatformActor|Properties")
 	float UpDownSpeed = 10.0f;
+	
+
 	
 };
