@@ -22,6 +22,8 @@ void ARotatingActor::BeginPlay()
 void ARotatingActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	//AddActorLocalRotation(FRotator(0.0f, 10.0f * DeltaTime, 0.0f));
 
 }
 

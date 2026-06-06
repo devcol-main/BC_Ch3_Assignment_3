@@ -61,8 +61,6 @@ void AItem::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	
-	
-	
 	/*
 	if (!FMath::IsNearlyZero(UpDownSpeed))
 	{		

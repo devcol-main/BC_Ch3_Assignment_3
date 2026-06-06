@@ -52,6 +52,8 @@ protected:
 	UAudioComponent* AudioComp;
 
 	// ===
+	 
+	
 	
 	// 함수를 블루프린트에서 호출 가능하도록 설정
 	UFUNCTION(BlueprintCallable, Category="Item|Actions")
