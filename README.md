@@ -6,6 +6,7 @@
 
 <p align="center">
 <img src="https://github.com/devcol-main/BC_Ch3_Assignment_3/blob/7aecdab82c5e40155518cf9d3356f0b67aedb245/Record/Record_2026_06_08_10_14_40_200.gif" width="50%" alt="B.C. Ch3 Assignment 3 gif">
+</p>
 
 <br> 
 
